@@ -16,7 +16,6 @@
     color: lightgreen;
   }
 }
-
 .site-nav {
     border-radius:10px;
     display: flex;
@@ -36,7 +35,10 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 a {
-    background: linear-gradient(to right, royalblue, royalblue 50%, lightblue 50%);
+    text-decoration: none;
+}
+.linksNstuff {
+      background: linear-gradient(to right, royalblue, royalblue 50%, lightblue 50%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -45,16 +47,18 @@ a {
     transition: background-position 275ms ease;
     color: lightblue;
     text-align: right;
-    text-decoration: none;
 }
-a:hover {
+.linksNstuff:hover {
     color: royalblue;
     background-position: 0 100%;
+}
+.site-home-link {
+    color: white;
 }
 </style>
 </head>
 <body>
-<nav class="site-nav">zachary7829's Blog<a class="githublink" href="https://github.com/zachary7829">‎ ‎ GitHub</a></a></nav>
+<nav class="site-nav"><a href="https://zachary7829.github.io/blog" class="site-home-link">zachary7829's Blog</a>‎ ‎ <a class="linksNstuff" href="https://zachary7829.github.io/blog/shortcuts">Deep Into Shortcuts</a> ‎ ‎ <a class="linksNstuff" href="https://github.com/zachary7829">GitHub</a></a></nav>
 &nbsp;
 <h1 id="shortcuts-file-format-documentation">Shortcuts File Format Documentation</h1>
 <p>Credits:</p>
@@ -62,13 +66,13 @@ a:hover {
 <ul>
 <li>u/Shoculad (Learned about iCloud API from them)</li>
 <li>Various people from r/Shortcuts and RoutineHub discord</li>
-<li>sebj for <a href="https://github.com/sebj/iOS-Shortcuts-Reference">https://github.com/sebj/iOS-Shortcuts-Reference</a></li>
+<li>sebj for <a class="linksNstuff" href="https://github.com/sebj/iOS-Shortcuts-Reference">https://github.com/sebj/iOS-Shortcuts-Reference</a></li>
 <li>ActuallyZach (Magic Variables)</li>
 <li>marcusrbrown (Re-enabling shorcut importing on iOS 13/14)</li>
 </ul>
 <p>(This guide is mainly intended for iOS 13/14, however there is still some stuff here that applies to iOS 15 and iOS 12-)</p>
 <h3 id="how-shortcuts-are-stored">How shortcuts are stored</h3>
-<p>On iOS 13, shortcuts are stored in /var/mobile/Library/Shortcuts/Shortcuts.realm. However, iOS 14 changes this to be in Shortcuts.sqlite. You don&#39;t need to worry about this at the moment though - what you do need to understand however is the .shortcut format. On iOS 12/13/14 devices, a shortcut that&#39;s stored on a device can be exported as an unsigned .shortcut file by using the Get My Shortcuts action (You can use a Save File action to save the output). iOS 15 is slightly different, however: you can&#39;t export shortcuts on device as unsigned shortcuts using Get My Shortcuts, only signed. You can, however, get a unsigned .shortcut from the iCloud API. Let&#39;s upload a shortcut to iCloud, and imagine our link is <a href="https://www.icloud.com/shortcuts/77dfe31578ac4f6fb084ebb418b34a49">https://www.icloud.com/shortcuts/77dfe31578ac4f6fb084ebb418b34a49</a>. Change /shortcuts/ to /shortcuts/api/records/ (<a href="https://www.icloud.com/shortcuts/api/records/77dfe31578ac4f6fb084ebb418b34a49">https://www.icloud.com/shortcuts/api/records/77dfe31578ac4f6fb084ebb418b34a49</a>). The value for fields.shortcut.value.downloadURL should be the URL for the unsigned .shortcut (Note: If you opened in Safari, change \/ to / in the URL). After getting the unsigned .shortcut, rename this to a plist and you should be able to easily open this in Xcode (or, use set name to rename to something.plist with Do Not Include File Extension on, and Get Text from that).</p>
+<p>On iOS 13, shortcuts are stored in /var/mobile/Library/Shortcuts/Shortcuts.realm. However, iOS 14 changes this to be in Shortcuts.sqlite. You don&#39;t need to worry about this at the moment though - what you do need to understand however is the .shortcut format. On iOS 12/13/14 devices, a shortcut that&#39;s stored on a device can be exported as an unsigned .shortcut file by using the Get My Shortcuts action (You can use a Save File action to save the output). iOS 15 is slightly different, however: you can&#39;t export shortcuts on device as unsigned shortcuts using Get My Shortcuts, only signed. (Shortcuts in iOS 15 are signed with Apple Encrypted Archives - learn more about them here: <a class="linksNstuff" href="https://man.cameronkatri.com/macOS/aea">https://man.cameronkatri.com/macOS/aea</a>). You can, however, get a unsigned .shortcut from the iCloud API. Let&#39;s upload a shortcut to iCloud, and imagine our link is <a class="linksNstuff" href="https://www.icloud.com/shortcuts/77dfe31578ac4f6fb084ebb418b34a49">https://www.icloud.com/shortcuts/77dfe31578ac4f6fb084ebb418b34a49</a>. Change /shortcuts/ to /shortcuts/api/records/ (<a class="linksNstuff" href="https://www.icloud.com/shortcuts/api/records/77dfe31578ac4f6fb084ebb418b34a49">https://www.icloud.com/shortcuts/api/records/77dfe31578ac4f6fb084ebb418b34a49</a>). The value for fields.shortcut.value.downloadURL should be the URL for the unsigned .shortcut (Note: If you opened in Safari, change \/ to / in the URL). After getting the unsigned .shortcut, rename this to a plist and you should be able to easily open this in Xcode (or, use set name to rename to something.plist with Do Not Include File Extension on, and Get Text from that).</p>
 <p>So, now lets go over the keys:</p>
 <ul>
 <li>WFWorkflowClientVersion - This is the number that represents the client version that the shortcut was shared on.</li>
